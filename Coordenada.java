@@ -1,18 +1,9 @@
-public class Coordenada {
-    private int fila;
-    private int col;
-
-    public Coordenada(int fila, int col) {
-        this.fila = fila;
-        this.col = col;
-    }
-
-    public int getFila() {
-        return fila;
-    }
-
-    public int getCol() {
-        return col;
+public record Coordenada(int fila, int col) {
+    
+    public Coordenada {
+        if (fila < 0 || fila > 5 || col < 0 || col > 5) {
+            throw new IllegalArgumentException("Las coordenadas deben estar entre 0 y 5.");
+        }
     }
 
     @Override
