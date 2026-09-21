@@ -7,5 +7,4 @@ public class CasillaVacia implements Entidad {
     public char getCaracter() {
         return '.';
     }
-
 }
