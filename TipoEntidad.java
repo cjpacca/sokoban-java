@@ -1,5 +1,5 @@
 public enum TipoEntidad {
-    VACIA,
+    VACIO,
     ROBOT,
     CAJA_OBJETIVO,
     CAJA_BLOQUEO
