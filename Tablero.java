@@ -187,4 +187,21 @@ public class Tablero {
 
         return null;
     }
+
+    public synchronized void registrarRobotAgotado(String idHilo) {
+        this.agotados++;
+        registrarTraza(idHilo, "BATERIA AGOTADA", "El robot se apaga");
+    }
+
+    public void imprimirReporteFinal() {
+        System.out.println("\n=== REPORTE FINAL DE SIMULACION ===");
+        System.out.println("Total de Ticks procesados: " + this.tick);
+        System.out.println("Cajas objetivo extraídas: " + this.extraidos);
+        System.out.println("Robots sin batería (Agotados): " + this.agotados);
+        System.out.println("Saturaciones del almacén: " + this.saturaciones);
+        System.out.println(
+            "Cajas objetivo restantes en tablero: " + this.cajasObjetivo
+        );
+        System.out.println("===================================");
+    }
 }
