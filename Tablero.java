@@ -52,14 +52,10 @@ public class Tablero {
         int posicionCoordenada = random.nextInt(disponibles.size());
         Coordenada coordenadaAInsertar = disponibles.get(posicionCoordenada);
 
-        _tablero[coordenadaAInsertar.fila()][coordenadaAInsertar.col()] =
-            nuevaCaja;
+        _tablero[coordenadaAInsertar.fila()][coordenadaAInsertar.col()] =  nuevaCaja;
         celdasOcupadas++;
 
-        String tipoAccion =
-            nuevaCaja.getTipo() == TipoEntidad.CAJA_OBJETIVO
-                ? "INSERTAR OBJETIVO ->"
-                : "INSERTAR BLOQUEO ->";
+        String tipoAccion = nuevaCaja.getTipo() == TipoEntidad.CAJA_OBJETIVO ? "INSERTAR OBJETIVO ->": "INSERTAR BLOQUEO ->";
         registrarTraza(idHilo, tipoAccion, coordenadaAInsertar.toString());
 
         if (nuevaCaja.getTipo() == TipoEntidad.CAJA_OBJETIVO) {
@@ -68,27 +64,19 @@ public class Tablero {
         }
     }
 
-    public synchronized boolean solicitarMovimiento(
-        Coordenada origen,
-        Coordenada destino,
-        String idHilo
-    ) {
+    public synchronized boolean solicitarMovimiento(Coordenada origen, Coordenada destino, String idHilo) {
         if (cajasObjetivo == 0) {
             return false;
         }
 
-        TipoEntidad tipoEntidadDestino = _tablero[destino.fila()][
-            destino.col()
-        ].getTipo();
+        TipoEntidad tipoEntidadDestino = _tablero[destino.fila()][destino.col()].getTipo();
 
         if (tipoEntidadDestino == TipoEntidad.VACIA) {
             if (destino.fila() == 5 && destino.col() == 5) {
                 return false;
             }
 
-            _tablero[destino.fila()][destino.col()] = _tablero[origen.fila()][
-                origen.col()
-            ];
+            _tablero[destino.fila()][destino.col()] = _tablero[origen.fila()][origen.col()];
             _tablero[origen.fila()][origen.col()] = new CasillaVacia();
             registrarTraza(idHilo, "MOVIMIENTO ->", destino.toString());
             return true;
@@ -99,11 +87,7 @@ public class Tablero {
         }
     }
 
-    private boolean empujarCaja(
-        Coordenada origen,
-        Coordenada destino,
-        String idHilo
-    ) {
+    private boolean empujarCaja(Coordenada origen, Coordenada destino, String idHilo) {
         int filaDiff = destino.fila() - origen.fila();
         int colDiff = destino.col() - origen.col();
 
@@ -125,9 +109,7 @@ public class Tablero {
         );
 
         if (
-            _tablero[proyeccionCaja.fila()][proyeccionCaja.col()].getTipo() !=
-            TipoEntidad.VACIA
-        ) {
+            _tablero[proyeccionCaja.fila()][proyeccionCaja.col()].getTipo() != TipoEntidad.VACIA) {
             return false;
         }
 
@@ -153,9 +135,7 @@ public class Tablero {
         }
 
         _tablero[proyeccionCaja.fila()][proyeccionCaja.col()] = cajaEmpujada;
-        _tablero[destino.fila()][destino.col()] = _tablero[origen.fila()][
-            origen.col()
-        ];
+        _tablero[destino.fila()][destino.col()] = _tablero[origen.fila()][origen.col()];
         _tablero[origen.fila()][origen.col()] = new CasillaVacia();
 
         String accion =
